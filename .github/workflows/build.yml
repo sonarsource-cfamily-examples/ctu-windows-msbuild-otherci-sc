@@ -1,0 +1,28 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+      - ctu-analysis
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build-analyze:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up msbuild
+        uses: microsoft/setup-msbuild@v2
+      - name: Restore/save analysis cache
+        if: contains(github.ref_name, 'ctu') # Set up filesystem cache only for branches containing 'ctu' in their name
+        uses: actions/cache@v4
+        with:
+          path: cfamily-cache
+          key: cfamily-cache-${{ github.sha }}
+          restore-keys: cfamily-cache-
+      - name: Build and analyze on SonarCloud
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }} # Put the name of your token here
+        run: .\build-analyze.ps1
+        shell: pwsh

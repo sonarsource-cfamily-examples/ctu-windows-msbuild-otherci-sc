@@ -1,0 +1,103 @@
+= C++ example project demonstrating Cross-Translation-Unit (CTU) analysis, scanned on SonarCloud using any CI
+
+:uri-qg-status: https://sonarcloud.io/dashboard?id=sonarsource-cfamily-examples_ctu-windows-msbuild-otherci-sc
+:img-qg-status: https://sonarcloud.io/api/project_badges/measure?project=sonarsource-cfamily-examples_ctu-windows-msbuild-otherci-sc&metric=alert_status
+:uri-build-status: https://github.com/sonarsource-cfamily-examples/ctu-windows-msbuild-otherci-sc/actions/workflows/build.yml
+:img-build-status: https://github.com/sonarsource-cfamily-examples/ctu-windows-msbuild-otherci-sc/actions/workflows/build.yml/badge.svg
+
+image:{img-build-status}[Build Status, link={uri-build-status}]
+image:{img-qg-status}[Quality Gate Status,link={uri-qg-status}]
+
+*This project features an issue that is only detected when Cross-Translation-Unit (CTU) analysis is enabled.*
+
+This project is analysed on https://sonarcloud.io/dashboard?id=sonarsource-cfamily-examples_ctu-windows-msbuild-otherci-sc[SonarCloud]!
+
+The `build-analyze.ps1` script demonstrates how to run an analysis on a C++ project build.
+GitHub actions are used for demonstration purposes as any CI could be used to run the `build-analyze.ps1` script. +
+Note that for security reasons, the token `SONARCLOUD_TOKEN` used in this example project is defined in the environment through GitHub secrets. It should not be made public.
+
+You can take a look at the script link:build-analyze.ps1[build-analyze.ps1] of this project to see it in practice.
+
+:note-caption: :bulb:
+NOTE: This example works with SonarQube too: set the property `sonar.host.url` to the URL of your SonarQube server and download the Build Wrapper from your SonarQube server.
+
+== Enabling CTU analysis
+
+Due to its intensive resource requirements, we recommend enabling Cross-Translation-Unit (CTU) analysis strictly on specialized branches for large projects.
+
+* First, enable CTU analysis for specific branches via the UI:
+
+image::https://github.com/user-attachments/assets/9e95becd-d203-46bb-a1ba-fece94122164[,600]
+image::https://github.com/user-attachments/assets/3ed69e8d-1de1-462c-805c-10c2f14da884[,600]
+
+_You can also set this in the_ `sonar-project.properties` _file:_ `sonar.cfamily.ctuAnalysis.branchSubstring=ctu`
+
+And also define them as https://docs.sonarcloud.io/sonarqube-cloud/analyzing-source-code/branch-analysis/branch-analysis#long-lived-branch-analysis[long-lived branches]:
+
+image::https://github.com/user-attachments/assets/3302a1d6-5a7c-44cd-a0fc-e02883866025[,600]
+
+* Second, make sure to set up the filesystem analysis cache for these specific branches via the `sonar-project.properties` file:
+
+```
+sonar.cfamily.analysisCache.mode=fs
+sonar.cfamily.analysisCache.path=cfamily-cache
+```
+
+* Finally, simply trigger an analysis on the corresponding branch.
+
+= Documentation
+
+- https://docs.sonarcloud.io/advanced-setup/languages/c-c-objective-c/[Documentation overview of the C, C++ and Objective-C analyzer]
+- https://docs.sonarcloud.io/analyzing-source-code/languages/c-family/customizing-the-analysis/#ctu-symbolic-execution[CTU analysis]
+- https://docs.sonarcloud.io/getting-started/github/[Documentation of using SonarCloud with GitHub]
+- https://docs.sonarcloud.io/advanced-setup/languages/c-family/prerequisites/#generating-a-compilation-database[Generating a compilation database (compile_commands.json)]
+- https://docs.sonarsource.com/sonarcloud/advanced-setup/languages/c-family/running-the-analysis/[Running the analysis in Compilation Database mode]
+
+= Windows\MSBuild
+
+A build of this example on Windows platform using MSBuild build system.
+
+To build the code run:
+----
+msbuild sonar_scanner_example.vcxproj
+----
+
+= Code Description
+
+An example of flawed C++ code demonstrating a bug only detectable with Cross Translation Unit (CTU) analysis. It can be https://github.com/sonarsource-cfamily-examples/automatic-analysis-sc[analyzed automatically], but it can also be compiled with different build systems using different CI pipelines on Linux, macOS, and Windows.
+
+Other repositories in https://github.com/sonarsource-cfamily-examples[this collection] add a specific build system, platform, and CI.
+The downstream repositories are analyzed either with https://www.sonarsource.com/products/sonarqube/[SonarQube Server] or https://www.sonarsource.com/products/sonarcloud/[SonarQube Cloud].
+
+You can find examples for:
+
+* https://github.com/sonarsource-cfamily-examples?q=linux[Linux]
+* https://github.com/sonarsource-cfamily-examples?q=macos[macOS]
+* https://github.com/sonarsource-cfamily-examples?q=windows[Windows]
+
+Using the following build systems:
+
+* https://github.com/sonarsource-cfamily-examples?q=cmake[CMake]
+* https://github.com/sonarsource-cfamily-examples?q=autotools[GNU Autotools]
+* https://github.com/sonarsource-cfamily-examples?q=xcode[Xcode]
+* https://github.com/sonarsource-cfamily-examples?q=msbuild[MSBuild]
+
+Running on the following CI services:
+
+* https://github.com/sonarsource-cfamily-examples?q=azure[Azure DevOps]
+* https://github.com/sonarsource-cfamily-examples?q=gh-actions[GitHub Actions]
+* https://github.com/sonarsource-cfamily-examples?q=travis[Travis]
+* https://github.com/sonarsource-cfamily-examples?q=jenkins[Jenkins]
+* https://github.com/sonarsource-cfamily-examples?q=gitlab[GitLab CI]
+* https://github.com/sonarsource-cfamily-examples?q=bitbucket[BitBucket Pipelines]
+* Additionally, https://github.com/orgs/sonarsource-cfamily-examples/repositories?q=otherci[generic examples] demonstrate integration with other CIs and https://github.com/orgs/sonarsource-cfamily-examples/repositories?q=manual[manual-configuration examples] should help you if you are running locally.
+
+Configured for analysis on:
+
+* https://github.com/sonarsource-cfamily-examples?q=-sq[SonarQube Server]
+* https://github.com/sonarsource-cfamily-examples?q=-sc[SonarQube Cloud]
+
+You can find also a few examples demonstrating:
+
+* https://github.com/orgs/sonarsource-cfamily-examples/repositories?q=compdb[The use of Compilation Database (compile_commands.json)]
+* https://github.com/orgs/sonarsource-cfamily-examples/repositories?q=topic%3Acoverage[Test coverage]
