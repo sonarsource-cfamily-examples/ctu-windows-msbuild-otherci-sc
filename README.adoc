@@ -1,7 +1,7 @@
 = C++ example project demonstrating Cross-Translation-Unit (CTU) analysis, scanned on SonarCloud using any CI
 
-:uri-qg-status: https://sonarcloud.io/dashboard?id=sonarsource-cfamily-examples_ctu-windows-msbuild-otherci-sc
-:img-qg-status: https://sonarcloud.io/api/project_badges/measure?project=sonarsource-cfamily-examples_ctu-windows-msbuild-otherci-sc&metric=alert_status
+:uri-qg-status: https://sonarcloud.io/dashboard?id=sonarsource-cfamily-examples_ctu-windows-msbuild-otherci-sc&branch=ctu-analysis
+:img-qg-status: https://sonarcloud.io/api/project_badges/measure?project=sonarsource-cfamily-examples_ctu-windows-msbuild-otherci-sc&branch=ctu-analysis&metric=alert_status
 :uri-build-status: https://github.com/sonarsource-cfamily-examples/ctu-windows-msbuild-otherci-sc/actions/workflows/build.yml
 :img-build-status: https://github.com/sonarsource-cfamily-examples/ctu-windows-msbuild-otherci-sc/actions/workflows/build.yml/badge.svg
 
